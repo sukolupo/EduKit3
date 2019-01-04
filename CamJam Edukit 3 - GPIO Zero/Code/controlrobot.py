@@ -3,7 +3,9 @@
 
 import time  # Import the Time library
 #import sys
-from msvcrt import getch
+#from msvcrt import getch
+import pygame, sys
+from pygame.locals import *
 from gpiozero import CamJamKitRobot, DistanceSensor  # Import the GPIO Zero Libraries
 
 robot = CamJamKitRobot()
@@ -61,27 +63,35 @@ def uturn():
     turnleft()
 
 def main():
+    pygame.init()
+    BLACK = (0,0,0)
+    WIDTH = 100
+    HEIGHT = 100
+    windowSurface = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
+
+    windowSurface.fill(BLACK)
     # Your code to control the robot goes below this line
     try:
         # repeat the next indented block forever
         while True:
-                key = ord(getch())
-                if key == 27: #ESC
-                    break
-                elif key == 13: #Enter
-                    uturn()
-                elif key == 224: #Special keys (arrows, f keys, ins, del, etc.)
-                    key = ord(getch())
-                    if key == 80: #Down arrow
-                        backwards()
-                    elif key == 72: #Up arrow
-                        forwards()
-                    elif key == 75: #Left arrow
-                        turnleft()
-                    elif key == 77: #Right arrow
-                        turnright()
-                        
-                time.sleep(sleeptime)
+               for event in pygame.event.get():
+                    if event.type == QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    if event.type == KEYDOWN:
+                        key = event.key
+                        if key == pygame.K_KP_ENTER: #Enter
+                            uturn()
+                        elif key == pygame.K_DOWN: #Down arrow
+                            backwards()
+                        elif key == pygame.K_UP: #Up arrow
+                            forwards()
+                        elif key == pygame.K_LEFT: #Left arrow
+                            turnleft()
+                        elif key == pygame.K_RIGHT: #Right arrow
+                            turnright()
+
+                    time.sleep(sleeptime)
 
                # robot.stop()
               
