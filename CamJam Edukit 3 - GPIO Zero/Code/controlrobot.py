@@ -15,12 +15,12 @@ turntime = 0.75
 sleeptime = 0.1
 
 # Set the relative speeds of the two motors, between 0.0 and 1.0
-leftmotorspeed = 0.5
-rightmotorspeed = 0.5
+leftmotorspeed = 0.75
+rightmotorspeed = 0.75
 
 # incase have put your motors on backwards uncomment these  (like i did)
-motorforward = (-leftmotorspeed, rightmotorspeed)
-motorbackward = (leftmotorspeed, -rightmotorspeed)
+motorforward = (leftmotorspeed, -rightmotorspeed)
+motorbackward = (-leftmotorspeed, rightmotorspeed)
 #motorforward = (leftmotorspeed, rightmotorspeed)
 #motorbackward = (-leftmotorspeed, -rightmotorspeed)
 motorleft = (-leftmotorspeed, 0)
@@ -94,7 +94,7 @@ def main():
             elif key == "d": #Right arrow
                 turnright()
 
-            time.sleep(sleeptime)
+            #time.sleep(sleeptime)
 
                # robot.stop()
               
