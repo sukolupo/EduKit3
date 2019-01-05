@@ -2,10 +2,8 @@
 #
 
 import time  # Import the Time library
-#import sys
-#from msvcrt import getch
-import pygame, sys
-from pygame.locals import *
+import sys
+import termios, tty, os
 from gpiozero import CamJamKitRobot, DistanceSensor  # Import the GPIO Zero Libraries
 
 robot = CamJamKitRobot()
@@ -20,7 +18,7 @@ sleeptime = 0.1
 leftmotorspeed = 0.5
 rightmotorspeed = 0.5
 
-# incase have put your moters on backwards uncomment these  (like i did)
+# incase have put your motors on backwards uncomment these  (like i did)
 motorforward = (-leftmotorspeed, -rightmotorspeed)
 motorbackward = (leftmotorspeed, rightmotorspeed)
 #motorforward = (leftmotorspeed, rightmotorspeed)
@@ -62,36 +60,40 @@ def uturn():
     turnleft()
     turnleft()
 
-def main():
-    pygame.init()
-    BLACK = (0,0,0)
-    WIDTH = 100
-    HEIGHT = 100
-    windowSurface = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
+# create to author recantha
+# getch function taken from https://github.com/recantha/EduKit3-RC-Keyboard/blob/master/rc_keyboard.py
+def getch():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
 
-    windowSurface.fill(BLACK)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
+# -----
+
+def main():
     # Your code to control the robot goes below this line
     try:
         # repeat the next indented block forever
         while True:
-               for event in pygame.event.get():
-                    if event.type == QUIT:
-                        pygame.quit()
-                        sys.exit()
-                    if event.type == KEYDOWN:
-                        key = event.key
-                        if key == pygame.K_KP_ENTER: #Enter
-                            uturn()
-                        elif key == pygame.K_DOWN: #Down arrow
-                            backwards()
-                        elif key == pygame.K_UP: #Up arrow
-                            forwards()
-                        elif key == pygame.K_LEFT: #Left arrow
-                            turnleft()
-                        elif key == pygame.K_RIGHT: #Right arrow
-                            turnright()
+            key = getch()
+            if key == "q": #quit
+                break
+            if key == "u": 
+                uturn()
+            elif key == "s": #Down arrow
+                backwards()
+            elif key == "w": #Up arrow
+                forwards()
+            elif key == "a": #Left arrow
+                turnleft()
+            elif key == "d": #Right arrow
+                turnright()
 
-                    time.sleep(sleeptime)
+            time.sleep(sleeptime)
 
                # robot.stop()
               
