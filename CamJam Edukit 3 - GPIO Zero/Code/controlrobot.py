@@ -19,8 +19,8 @@ leftmotorspeed = 0.5
 rightmotorspeed = 0.5
 
 # incase have put your motors on backwards uncomment these  (like i did)
-motorforward = (-leftmotorspeed, -rightmotorspeed)
-motorbackward = (leftmotorspeed, rightmotorspeed)
+motorforward = (-leftmotorspeed, rightmotorspeed)
+motorbackward = (leftmotorspeed, -rightmotorspeed)
 #motorforward = (leftmotorspeed, rightmotorspeed)
 #motorbackward = (-leftmotorspeed, -rightmotorspeed)
 motorleft = (leftmotorspeed, 0)
