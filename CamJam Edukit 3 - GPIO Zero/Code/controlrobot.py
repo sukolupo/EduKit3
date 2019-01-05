@@ -23,7 +23,7 @@ motorforward = (-leftmotorspeed, rightmotorspeed)
 motorbackward = (leftmotorspeed, -rightmotorspeed)
 #motorforward = (leftmotorspeed, rightmotorspeed)
 #motorbackward = (-leftmotorspeed, -rightmotorspeed)
-motorleft = (leftmotorspeed, 0)
+motorleft = (-leftmotorspeed, 0)
 motorright = (0, rightmotorspeed)
 
 
@@ -57,8 +57,9 @@ def forwards():
 
 def uturn():
     print("uturn")
-    turnleft()
-    turnleft()
+    for x in range(4):
+        turnleft()
+
 
 # create to author recantha
 # getch function taken from https://github.com/recantha/EduKit3-RC-Keyboard/blob/master/rc_keyboard.py
